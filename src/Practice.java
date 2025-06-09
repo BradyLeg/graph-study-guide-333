@@ -199,6 +199,29 @@ public class Practice {
    * @return whether there exists a valid positive path from starting to ending
    */
   public static boolean positivePathExists(Map<Integer, Set<Integer>> graph, int starting, int ending) {
+    Set<Integer> visited = new HashSet<>();
+
+    return positivePathExists(graph, ending, starting, visited);
+  }
+
+  public static boolean positivePathExists(Map<Integer, Set<Integer>> graph, int ending, int current,
+      Set<Integer> visited) {
+    if (current < 0 || visited.contains(current)) {
+      return false;
+    }
+
+    if (current == ending) {
+      return true;
+    }
+
+    visited.add(current);
+
+    for (int neighbor : graph.get(current)) {
+      if (positivePathExists(graph, ending, neighbor, visited)) {
+        return true;
+      }
+    }
+
     return false;
   }
 
@@ -215,8 +238,12 @@ public class Practice {
    *         company, false otherwise
    */
   public static boolean hasExtendedConnectionAtCompany(Professional person, String companyName) {
+    Set<Professional> visited = new HashSet<>();
+
     return false;
   }
+
+  public static boolean hasExtendedConnectionAtCompany(Professional person, String companyName) {
 
   /**
    * Returns a list of possible next moves starting from a given position.
