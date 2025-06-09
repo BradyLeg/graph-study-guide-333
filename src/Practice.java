@@ -239,11 +239,29 @@ public class Practice {
    */
   public static boolean hasExtendedConnectionAtCompany(Professional person, String companyName) {
     Set<Professional> visited = new HashSet<>();
+    return hasExtendedConnectionAtCompany(person, companyName, visited);
+  }
+
+  public static boolean hasExtendedConnectionAtCompany(Professional person, String companyName,
+      Set<Professional> visited) {
+    if (person == null || visited.contains(person)) {
+      return false;
+    }
+
+    if (person.getCompany() == companyName) {
+      return true;
+    }
+
+    visited.add(person);
+
+    for (Professional conntection : person.getConnections()) {
+      if (hasExtendedConnectionAtCompany(conntection, companyName, visited)) {
+        return true;
+      }
+    }
 
     return false;
   }
-
-  public static boolean hasExtendedConnectionAtCompany(Professional person, String companyName) {
 
   /**
    * Returns a list of possible next moves starting from a given position.
